@@ -3,7 +3,7 @@
 void urlify(std::string& msg)
 {}
 
-int main
+int main()
 {
     return 0;
 }
