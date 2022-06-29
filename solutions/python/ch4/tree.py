@@ -5,6 +5,19 @@ class BinSearchTree:
     def __init__(self) -> None:
         self.root = None
 
+    def search(self, key):
+        node = self.root
+        while node  and key != node.key:
+            if key < node.key:
+                node = node.left
+            else:
+                node = node.right
+
+        if node:
+            return node.data
+
+        return None
+
     def insert(self, key, data):
         y = None
         x = self.root
@@ -29,7 +42,6 @@ class BinSearchTree:
     def inorder_traversal(self, node):
         
         if node:
-            
             self.inorder_traversal(node.left)
             print(f"({node.key}, {node.data})", end=", ")
             self.inorder_traversal(node.right)
@@ -56,3 +68,7 @@ if __name__ == "__main__":
         tree.insert(i, 2*i)
 
     tree.print() # should print [(1,2), (2,4), ..., (9,18)]
+
+    assert tree.search(3) == 6, "Key 6 shall point to 6"
+    assert tree.search(20) == None, "-1 key shall not exist"
+    print("Test passed!")
