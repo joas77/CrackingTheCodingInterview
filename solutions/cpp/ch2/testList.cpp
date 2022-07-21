@@ -10,6 +10,6 @@ int main()
         list.appendToTail(i);
     }
 
-    //list.print();
+    list.print();
 
 }
