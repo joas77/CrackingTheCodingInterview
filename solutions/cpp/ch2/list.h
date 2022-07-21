@@ -1,4 +1,6 @@
+#pragma once
 #include <iostream>
+#include <set>
 
 template<typename T>
 struct Node
@@ -17,8 +19,10 @@ template<typename T>
 class SingleLinkedList{
 public:
     SingleLinkedList();
-    //~SingleLinkedList();
+    ~SingleLinkedList();
     void appendToTail(T data);
+    void deleteNode(T data);
+    void removesDuplicates();
     void print();
 
 private:
@@ -28,6 +32,19 @@ private:
 
 template <typename T>
 SingleLinkedList<T>::SingleLinkedList(){}
+
+template <typename T>
+SingleLinkedList<T>::~SingleLinkedList()
+{
+    Node<T>* n = mHead;
+
+    while(n)
+    {
+        Node<T>* pNodeTobeDeleted = n;
+        n = n->next;
+        delete pNodeTobeDeleted;
+    }
+}
 
 template <typename T>
 void SingleLinkedList<T>::appendToTail(T data)
@@ -50,6 +67,32 @@ void SingleLinkedList<T>::appendToTail(T data)
 }
 
 template <typename T>
+void SingleLinkedList<T>::deleteNode(T data)
+{
+    Node<T>* n = mHead;
+    if(n->data == data)
+    {
+        mHead = mHead->next; /* moved head */
+        delete n;
+        return;
+    }
+
+    while(n->next != nullptr)
+    {
+        if(n->next->data == data)
+        {
+            Node<T>* pNodeTobeDeleted = n->next;
+            n->next = n->next->next;
+            /* head didn't change */
+
+            delete pNodeTobeDeleted;
+        }
+        n = n->next;
+    }
+
+}
+
+template <typename T>
 void SingleLinkedList<T>::print()
 {
     Node<T>* n = mHead;
@@ -64,3 +107,28 @@ void SingleLinkedList<T>::print()
     }
     std::cout << "]" << std::endl;
 }
+
+// template <typename T>
+// void SingleLinkedList<T>::removesDuplicates()
+// {
+//     std::set<T> duplicates;
+
+//     Node<T>* n = mHead;
+
+//     while(n->next != nullptr)
+//     {
+//         if(duplicates.find(n->data) != duplicates.end)
+//         {
+//             // data is duplicated
+//             Node<T>* pNodeTobeDeleted = n;
+//             n = n->next;
+
+//         }
+//         else
+//         {
+//             duplicates.emplace(n->data);
+//             n = n->next;
+//         }
+//         n = n->next;
+//     }
+// }
