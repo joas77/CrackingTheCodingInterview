@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <iostream>
 #include <string>
+#include <cstdlib>
 
 template <typename T>
 std::ostream& operator<<(std::ostream& out, std::vector<T> v)

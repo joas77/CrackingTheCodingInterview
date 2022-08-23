@@ -1,5 +1,4 @@
 #include "common.h"
-#include <ctypes>
 
 template <typename T>
 class Matrix{
@@ -20,30 +19,33 @@ public:
         return Matrix(mData);
     };
 
-    T& at(int x, int y)
+    T& at(size_t x, size_t y)
     {
         return mData.at(x).at(y);
     };
 
     void rotateRigth()
     {
+        // TODO: implement rotation inplace (i.e. wihtouth copy memory)
         auto tempMatrix = copy();
 
         for(size_t i=0; i<mSize; i++)
         {
-            copyColumnToRow(i, mSize - 1 - i, tempMatrix);
+            copyRowToColumn(i, mSize - 1 - i, tempMatrix);
         }
+
+        mData = tempMatrix.mData;
     }
 
 private:
     std::vector<std::vector<T>> mData;
-    int mSize;
+    size_t mSize;
 
-    void copyColumnToRow(int rowIndex, int colIndex, Matrix& dest)
+    void copyRowToColumn(size_t rowIndex, size_t colIndex, Matrix& dest)
     {
-        for(const auto& e: mData.at(rowIndex))
+        for(size_t i=0; i < mData.at(rowIndex).size(); i++)
         {
-            
+            dest.at(i, colIndex) = mData.at(rowIndex).at(i); 
         }
     }
 };
@@ -61,6 +63,23 @@ int main()
 
     A.at(1,1) = 10;
     A.print();
+    std::cout << "B = " << std::endl;
     B.print();
+
+    std::cout<< "Rotating B matrix..." << std::endl;
+    B.rotateRigth();
+    B.print();
+
+    std::cout << "lets try with a 4x4 matrix..." <<std::endl;
+    Matrix<int> C({
+        {1, 2, 3, 4},
+        {4, 6, 7, 8},
+        {9, 10, 11, 12},
+        {13, 14, 15, 16}
+    });
+
+    C.print();
+    C.rotateRigth();
+    C.print();
     return 0;
 }
