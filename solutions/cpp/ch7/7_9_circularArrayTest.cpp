@@ -4,11 +4,12 @@
 template<typename T, std::size_t Size>
 void testCircArrayConstruction(CircularArray<T, Size>& circArr){
     std::cout << "*******************************" << std::endl;
+    std::cout << "Circular Array: [";
     for(std::size_t i=0; i<circArr.size(); i++){
-       std::cout << "circular Array["<<i<<"] = "<< circArr[i] << std::endl; 
+       std::cout <<  circArr[i] <<", "; 
     }
+    std::cout << "]" << std::endl;
 
-    std::cout << "Testing size() method..." << std::endl;
     std::cout << "circArr.size() = " << circArr.size() << std::endl;
     std::cout << "*******************************" << std::endl;
 }
@@ -26,6 +27,13 @@ int main()
     // Testing initializer list
     CircularArray<int, 10> initListArr{{1,2,3,4,5,6,7,8,9,10}};
     testCircArrayConstruction(initListArr);
+
+    std::cout << "Testing rotate method..." << std::endl;
+    for(std::size_t i=0; i<initListArr.size(); i++){
+        std::cout << "rotating " << i << " positions..." << std::endl;
+        initListArr.rotate(i);
+        testCircArrayConstruction(initListArr);
+    }
 
     return 0;
 }

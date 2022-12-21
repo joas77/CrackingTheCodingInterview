@@ -10,22 +10,24 @@ public:
     CircularArray(){}
 
     CircularArray(std::initializer_list<Type> list){
-        std::copy(list.begin(), list.end(), data.begin());
+        std::copy(list.begin(), list.end(), mData.begin());
     }
 
     Type& operator[](const std::size_t index){
-        return data[index];
+        return mData[(mStartPos + index)%size()];
     }
 
     std::size_t size(){
-        return data.size();
+        return mData.size();
     }
 
     void rotate(std::size_t positions){
-        
+        mStartPos += positions % size();
     }
 
 
 private:
-    std::array<Type, Size> data;
+    std::array<Type, Size> mData;
+    std::size_t mStartPos = 0;
+    
 };
