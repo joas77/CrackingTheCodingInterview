@@ -13,5 +13,7 @@ int main()
         head.appendToTail(i);
     }
 
+    printSingleLinkedList(head);
+
     return 0;
 }
